@@ -51,11 +51,7 @@ public class ScaleController {
             Invocable invocable = (Invocable) engine;
             Object result = invocable.invokeFunction("scoreCalculator", itemsJson);
             
-            return Response.success(Map.of(
-                "id", request.getId(),
-                "itemsCount", request.getItems().size(),
-                "score", result
-            ));
+            return Response.success(result);
             
         } catch (Exception e) {
             log.error("Error processing script for id {}: {}", request.getId(), e.getMessage());

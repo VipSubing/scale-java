@@ -2,3 +2,9 @@ server:
   port: 8080
   servlet:
     context-path: /scale
+
+# Optional: Add these if you want to customize the logging colors
+spring:
+  output:
+    ansi:
+      enabled: always

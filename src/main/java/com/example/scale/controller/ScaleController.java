@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.env.Environment;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.*;
 import java.time.LocalDateTime;
 import lombok.Data;
+import java.util.Arrays;
 
 /**
  * 评分计算控制器
@@ -40,6 +42,9 @@ public class ScaleController {
     /** 缓存过期时间（小时） */
     private static final long CACHE_EXPIRE_HOURS = 1;
 
+    /** 环境配置 */
+    private final Environment environment;
+
     /**
      * 脚本缓存对象
      */
@@ -56,9 +61,10 @@ public class ScaleController {
         }
     }
 
-    public ScaleController(RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public ScaleController(RestTemplate restTemplate, ObjectMapper objectMapper, Environment environment) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
+        this.environment = environment;
         this.scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
         this.scriptCache = new ConcurrentHashMap<>();
         
@@ -68,9 +74,22 @@ public class ScaleController {
     }
 
     /**
-     * 获取脚本内容，优先从缓存获取
+     * 获取脚本内容，开发环境不使用缓存
      */
     private String getScript(String scriptId) {
+        // 检查是否为开发环境
+        boolean isDev = Arrays.asList(environment.getActiveProfiles()).contains("dev");
+        
+        // 开发环境直接获取脚本，不使用缓存
+        if (isDev) {
+            log.debug("开发环境，直接获取脚本: {}", scriptId);
+            return restTemplate.getForObject(
+                SCRIPT_URL + "/" + scriptId + ".js", 
+                String.class
+            );
+        }
+        
+        // 生产环境使用缓存
         ScriptCache cache = scriptCache.get(scriptId);
         
         // 如果缓存不存在或已过期，则重新获取
@@ -112,6 +131,7 @@ public class ScaleController {
                 scriptEngine.eval(scriptContent);
                 Invocable invocable = (Invocable) scriptEngine;
                 Object result = invocable.invokeFunction("scoreCalculator", itemsJson);
+                log.info("计算结果: {}", result);
                 return CompletableFuture.completedFuture(Response.success(result));
             }
             

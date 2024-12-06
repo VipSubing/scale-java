@@ -74,7 +74,7 @@ public class ScaleController {
     }
 
     /**
-     * 获取脚本内容，开发环境不使用缓存
+     * 获取脚本内容，��发环境不使用缓存
      */
     private String getScript(String scriptId) {
         // 检查是否为开发环境

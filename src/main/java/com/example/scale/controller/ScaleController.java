@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.Invocable;
-import java.util.Map;
+
 
 @Slf4j
 @RestController
@@ -33,7 +33,7 @@ public class ScaleController {
         
         try {
             String scriptContent = restTemplate.getForObject(SCRIPT_URL + "/" + request.getId() + ".js", String.class);
-            log.debug("Retrieved script content: {}", scriptContent);
+            // log.debug("Retrieved script content: {}", scriptContent);
             
             // Convert items to JSON string
             String itemsJson = objectMapper.writeValueAsString(request.getItems());

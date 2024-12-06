@@ -3,15 +3,18 @@ package com.example.scale.controller;
 import com.example.scale.entity.ComputeRequest;
 import com.example.scale.entity.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.scheduling.annotation.Async;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.Invocable;
-import java.util.concurrent.CompletableFuture;
+import java.util.Map;
+import java.util.concurrent.*;
+import java.time.LocalDateTime;
+import lombok.Data;
 
 /**
  * 评分计算控制器
@@ -27,10 +30,62 @@ public class ScaleController {
     private final ObjectMapper objectMapper;
     /** 远程脚本URL基础地址 */
     private static final String SCRIPT_URL = "https://purre-green-1309961435.cos.ap-chengdu.myqcloud.com/Scale/scriptes";
+    
+    /** JavaScript引擎实例 */
+    private final ScriptEngine scriptEngine;
+    
+    /** 脚本缓存，key为脚本ID，value为缓存对象 */
+    private final Map<String, ScriptCache> scriptCache;
+    
+    /** 缓存过期时间（小时） */
+    private static final long CACHE_EXPIRE_HOURS = 1;
+
+    /**
+     * 脚本缓存对象
+     */
+    @Data
+    private static class ScriptCache {
+        /** 脚本内容 */
+        private final String content;
+        /** 缓存时间 */
+        private final LocalDateTime cacheTime;
+        
+        /** 判断缓存是否过期 */
+        public boolean isExpired() {
+            return LocalDateTime.now().minusHours(CACHE_EXPIRE_HOURS).isAfter(cacheTime);
+        }
+    }
 
     public ScaleController(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
+        this.scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
+        this.scriptCache = new ConcurrentHashMap<>();
+        
+        if (this.scriptEngine == null) {
+            throw new RuntimeException("JavaScript引擎初始化失败");
+        }
+    }
+
+    /**
+     * 获取脚本内容，优先从缓存获取
+     */
+    private String getScript(String scriptId) {
+        ScriptCache cache = scriptCache.get(scriptId);
+        
+        // 如果缓存不存在或已过期，则重新获取
+        if (cache == null || cache.isExpired()) {
+            String scriptContent = restTemplate.getForObject(
+                SCRIPT_URL + "/" + scriptId + ".js", 
+                String.class
+            );
+            
+            cache = new ScriptCache(scriptContent, LocalDateTime.now());
+            scriptCache.put(scriptId, cache);
+            log.debug("更新脚本缓存: {}", scriptId);
+        }
+        
+        return cache.getContent();
     }
 
     /**
@@ -42,34 +97,27 @@ public class ScaleController {
     @PostMapping
     @Async
     public CompletableFuture<Response> processItems(@RequestBody ComputeRequest request) {
-        log.info("Received request with id: {}", request.getId());
-        log.debug("Request items: {}", request.getItems());
+        log.info("收到请求，ID: {}", request.getId());
+        log.debug("请求数据: {}", request.getItems());
         
         try {
-            // 获取远程JavaScript脚本
-            String scriptContent = restTemplate.getForObject(SCRIPT_URL + "/" + request.getId() + ".js", String.class);
+            // 获取脚本内容（优先从缓存获取）
+            String scriptContent = getScript(request.getId());
             
             // 将请求数据转换为JSON字符串
             String itemsJson = objectMapper.writeValueAsString(request.getItems());
             
-            // 初始化JavaScript引擎
-            ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-            if (engine == null) {
-                throw new RuntimeException("JavaScript engine not found");
+            // 执行脚本
+            synchronized (scriptEngine) {
+                scriptEngine.eval(scriptContent);
+                Invocable invocable = (Invocable) scriptEngine;
+                Object result = invocable.invokeFunction("scoreCalculator", itemsJson);
+                return CompletableFuture.completedFuture(Response.success(result));
             }
             
-            // 执行脚本
-            engine.eval(scriptContent);
-            
-            // 调用评分计算函数
-            Invocable invocable = (Invocable) engine;
-            Object result = invocable.invokeFunction("scoreCalculator", itemsJson);
-            
-            return CompletableFuture.completedFuture(Response.success(result));
-            
         } catch (Exception e) {
-            log.error("Error processing script for id {}: {}", request.getId(), e.getMessage());
-            return CompletableFuture.completedFuture(Response.error("Failed to process script: " + e.getMessage()));
+            log.error("处理脚本出错，ID: {}, 错误: {}", request.getId(), e.getMessage());
+            return CompletableFuture.completedFuture(Response.error("脚本处理失败: " + e.getMessage()));
         }
     }
 } 

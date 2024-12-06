@@ -8,3 +8,11 @@ spring:
   output:
     ansi:
       enabled: always
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+    livereload:
+      enabled: true
+  profiles:
+    active: dev

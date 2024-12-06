@@ -14,3 +14,5 @@ spring:
       additional-paths: src/main/java
     livereload:
       enabled: true
+  profiles:
+    active: dev

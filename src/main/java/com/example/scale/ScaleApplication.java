@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * 应用程序入口
@@ -37,12 +40,24 @@ public class ScaleApplication implements CommandLineRunner {
         String address = environment.getProperty("server.address", "0.0.0.0");
         String contextPath = environment.getProperty("server.servlet.context-path", "");
         
+        // 获取服务器IP地址
+        String serverIp = "";
+        try {
+            Process process = Runtime.getRuntime().exec("curl -s ifconfig.me");
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                serverIp = reader.readLine();
+            }
+        } catch (IOException e) {
+            serverIp = "<your-server-ip>";
+            log.warn("无法获取服务器IP地址: {}", e.getMessage());
+        }
+        
         // 输出启动信息
         log.info("----------------------------------------");
         log.info("应用启动成功!");
         log.info("当前环境: {}", currentEnv);
         log.info("绑定地址: {}", address);
-        log.info("服务地址: http://{}:{}{}", address.equals("0.0.0.0") ? InetAddress.getLocalHost().getHostAddress() : address, port, contextPath);
+        log.info("服务地址: http://{}:{}{}", address.equals("0.0.0.0") ? serverIp : address, port, contextPath);
         log.info("日志路径: {}", environment.getProperty("logging.file.name"));
         log.info("----------------------------------------");
     }

@@ -1,54 +1,17 @@
-### Logs ###
-logs/
-*.log
-*.log.*
-*.gz
-
-### Maven ###
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea/
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-### Java ###
-# Compiled class file
+# Compiled class files
 *.class
 
-# Package Files #
+# Log files
+logs/
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files
 *.jar
 *.war
 *.nar
@@ -57,29 +20,29 @@ build/
 *.tar.gz
 *.rar
 
-### Application Specific ###
-# Application properties for local development
-src/main/resources/application-local.yml
-src/main/resources/application-local.properties
+# virtual machine crash logs
+hs_err_pid*
 
-# Docker volumes
-docker/volumes/
+# IDE files
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
 
-# Environment variables
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Docker
 .env
-.env.local
+*.tar
 
-# Node (if using frontend)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS generated files
+# OS specific
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db

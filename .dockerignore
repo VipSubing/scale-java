@@ -5,3 +5,5 @@ target/*
 !target/*.jar
 logs/
 README.md 
+*.md
+*.log 

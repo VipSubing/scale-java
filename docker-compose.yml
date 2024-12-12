@@ -9,6 +9,7 @@ services:
     networks:
       - scale-network
 
+
   nginx:
     image: nginx:stable
     container_name: scale-nginx

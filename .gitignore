@@ -4,7 +4,8 @@
 # Log files
 logs/
 *.log
-
+# 临时部署目录
+deploy_tmp/
 # BlueJ files
 *.ctxt
 

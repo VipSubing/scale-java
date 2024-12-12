@@ -26,3 +26,6 @@ docker run -d -p 8080:8080 --platform linux/amd64  my-scale:1.1
 
 # 跟踪日志
 docker logs -f -t charming_gould
+
+#nginx app
+docker-compose up -d

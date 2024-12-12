@@ -1,6 +1,7 @@
 .git
 # .gitignore
-.mvn
+.idea
+*.iml
 target/*
 !target/*.jar
 logs/

@@ -1,7 +1,7 @@
 # 使用 JDK 21 作为基础镜像
-# FROM eclipse-temurin:21-jdk-jammy
-FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/openjdk:21
-# FROM subing-local-jdk:21
+
+# FROM common-jdk:21
+
 # 设置工作目录
 WORKDIR /app
 
@@ -18,6 +18,6 @@ EXPOSE 8080
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update && apt-get install -y curl
+# RUN apt-get update && apt-get install -y curl
 
 CMD ["java", "-jar", "/app/app.jar"]

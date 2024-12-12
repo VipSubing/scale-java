@@ -91,3 +91,47 @@
    # 检查应用健康状态
    curl http://localhost/scale/actuator/health
    ```
+
+## HTTPS 配置
+
+1. SSL 证书配置
+   ```bash
+   # 如果使用自签名证书（仅开发环境）
+   mkdir -p ssl
+   openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+     -keyout ssl/scale.key -out ssl/scale.crt \
+     -subj "/C=CN/ST=State/L=City/O=Organization/CN=your-domain.com"
+   
+   # 如果使用正式证书
+   # 将证书文件复制到 ssl 目录
+   cp your-certificate.crt ssl/scale.crt
+   cp your-private.key ssl/scale.key
+   ```
+
+2. 证书权限设置
+   ```bash
+   chmod 644 ssl/scale.crt
+   chmod 600 ssl/scale.key
+   ```
+
+3. 重启服务
+   ```bash
+   docker-compose down
+   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+   ```
+
+注意：生产环境请使用正式的 SSL 证书，可以从 Let's Encrypt 等机构获取免费证书。
+
+## Docker 镜像构建
+
+1. 构建基础 JDK 镜像
+   ```bash
+   # 构建 JDK 基础镜像
+   docker build -t scale-jdk:21 -f docker/jdk/Dockerfile ./docker/jdk
+   ```
+
+2. 构建应用镜像
+   ```bash
+   # 构建应用镜像
+   docker build -t scale-app .
+   ```

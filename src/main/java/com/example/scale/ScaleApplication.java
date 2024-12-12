@@ -43,7 +43,9 @@ public class ScaleApplication implements CommandLineRunner {
         // 获取服务器IP地址
         String serverIp = "";
         try {
-            Process process = Runtime.getRuntime().exec("curl -s ifconfig.me");
+            Process process = new ProcessBuilder("curl", "-s", "ifconfig.me")
+                    .redirectErrorStream(true)
+                    .start();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 serverIp = reader.readLine();
             }

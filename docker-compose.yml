@@ -1,7 +1,9 @@
 services:
+ 
   app:
     build: .
     container_name: scale-app
+    restart: always
     volumes:
       - ./logs:/app/logs
     networks:
@@ -10,6 +12,7 @@ services:
   nginx:
     image: nginx:stable
     container_name: scale-nginx
+    restart: always
     ports:
       - "80:80"
       - "443:443"

@@ -1,502 +1,505 @@
-[
-    {
-        "title": "我觉得闷闷不乐，情绪低沉",
-        "answers": [
-            {
-                "text": "没有或很少时间（过去一周内，出现这类情况的日子不超过一天）",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间（过去一周内，有1-2天有过这类情况）",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间（过去一周内，3-4天有过这类情况）",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间（过去一周内，有5-7天有过这类情况）",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我觉得一天之中早晨最好",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我一阵阵哭出来或觉得想哭",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我晚上睡眠不好",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我吃的跟平常一样多",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我与异性亲密接触时和以往一样感觉愉快",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我发觉我的体重在下降",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我有便秘的苦恼",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我心跳比平时快",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我无缘无故地感到疲乏",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我的头脑跟平常一样清楚",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我觉得经常做的事情并没有困难",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我觉得不安而平静不下来",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我对将来抱有希望",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我比平常容易生气激动",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我觉得作出决定是容易的",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我觉得自己是个有用的人，有人需要我",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我的生活过得很有意思",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "我认为如果我死了别人会生活得好些",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 1,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 4,
-                "selected": false
-            }
-        ]
-    },
-    {
-        "title": "平常感兴趣的事我仍然照样感兴趣",
-        "answers": [
-            {
-                "text": "没有或很少时间",
-                "score": 4,
-                "selected": true
-            },
-            {
-                "text": "小部分时间",
-                "score": 3,
-                "selected": false
-            },
-            {
-                "text": "相当多时间",
-                "score": 2,
-                "selected": false
-            },
-            {
-                "text": "绝大部分或全部时间",
-                "score": 1,
-                "selected": false
-            }
-        ]
-    }
-]
+{
+    "items":[
+        {
+            "title": "我觉得闷闷不乐，情绪低沉",
+            "answers": [
+                {
+                    "text": "没有或很少时间（过去一周内，出现这类情况的日子不超过一天）",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间（过去一周内，有1-2天有过这类情况）",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间（过去一周内，3-4天有过这类情况）",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间（过去一周内，有5-7天有过这类情况）",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我觉得一天之中早晨最好",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我一阵阵哭出来或觉得想哭",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我晚上睡眠不好",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我吃的跟平常一样多",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我与异性亲密接触时和以往一样感觉愉快",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我发觉我的体重在下降",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我有便秘的苦恼",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我心跳比平时快",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我无缘无故地感到疲乏",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我的头脑跟平常一样清楚",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我觉得经常做的事情并没有困难",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我觉得不安而平静不下来",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我对将来抱有希望",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我比平常容易生气激动",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我觉得作出决定是容易的",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我觉得自己是个有用的人，有人需要我",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我的生活过得很有意思",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "我认为如果我死了别人会生活得好些",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 1,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 4,
+                    "selected": false
+                }
+            ]
+        },
+        {
+            "title": "平常感兴趣的事我仍然照样感兴趣",
+            "answers": [
+                {
+                    "text": "没有或很少时间",
+                    "score": 4,
+                    "selected": true
+                },
+                {
+                    "text": "小部分时间",
+                    "score": 3,
+                    "selected": false
+                },
+                {
+                    "text": "相当多时间",
+                    "score": 2,
+                    "selected": false
+                },
+                {
+                    "text": "绝大部分或全部时间",
+                    "score": 1,
+                    "selected": false
+                }
+            ]
+        }
+    ],
+    "id":"000000007"
+}

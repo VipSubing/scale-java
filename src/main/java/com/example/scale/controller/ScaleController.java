@@ -118,7 +118,7 @@ public class ScaleController {
     public CompletableFuture<Response> processItems(@RequestBody ComputeRequest request) {
         log.info("收到请求，ID: {}", request.getId());
         log.debug("请求数据: {}", request.getItems());
-        
+        log.info("Success");
         try {
             // 获取脚本内容（优先从缓存获取）
             String scriptContent = getScript(request.getId());
@@ -132,6 +132,7 @@ public class ScaleController {
                 Invocable invocable = (Invocable) scriptEngine;
                 Object result = invocable.invokeFunction("scoreCalculator", itemsJson);
                 log.info("计算结果: {}", result);
+                log.info("Success");
                 return CompletableFuture.completedFuture(Response.success(result));
             }
             

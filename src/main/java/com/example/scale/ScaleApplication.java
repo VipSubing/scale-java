@@ -53,13 +53,21 @@ public class ScaleApplication implements CommandLineRunner {
             serverIp = "<your-server-ip>";
             log.warn("无法获取服务器IP地址: {}", e.getMessage());
         }
-        
+       
         // 输出启动信息
         log.info("----------------------------------------");
         log.info("应用启动成功!");
         log.info("当前环境: {}", currentEnv);
         log.info("绑定地址: {}", address);
-        log.info("服务地址: http://{}:{}{}", address.equals("0.0.0.0") ? serverIp : address, port, contextPath);
+        if (currentEnv.equals("[dev]")) {
+            String localIp = InetAddress.getLocalHost().getHostAddress();
+            log.info("服务地址: http://{}:{}{}", address.equals("0.0.0.0") ? localIp : address, port, contextPath);
+            // 局域网地址
+            // log.info("局域网地址: http://{}:{}{}", address.equals("0.0.0.0") ? serverIp : address, port, contextPath);
+        } else {
+            // 外网地址
+            log.info("服务地址: http://{}:{}{}", address.equals("0.0.0.0") ? serverIp : address, port, contextPath);
+        }
         log.info("日志路径: {}", environment.getProperty("logging.file.name"));
         log.info("----------------------------------------");
     }

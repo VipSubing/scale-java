@@ -1,7 +1,9 @@
 package com.example.scale.service;
 
-import lombok.extern.slf4j.Slf4j;
+import com.example.scale.entity.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,21 +27,23 @@ public class JsonService {
     
     /** RestTemplate用于发送HTTP请求 */
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
     
     /**
      * 获取推荐JSON数据
      * 使用Spring Cache缓存结果
      */
     @Cacheable(value = "recommendData")
-    public String getCachedJsonData() {
+    public Response getCachedJsonData() {
         log.info(">>> 缓存未命中，从远程获取推荐JSON数据");
         try {
             String data = restTemplate.getForObject(REMOTE_JSON_URL, String.class);
             log.info("<<< 远程推荐数据获取成功，将被缓存");
-            return data != null ? data : "[]";
+            Object jsonData = objectMapper.readValue(data != null ? data : "[]", Object.class);
+            return Response.success(jsonData);
         } catch (Exception e) {
             log.error("远程推荐数据加载失败: {}", e.getMessage(), e);
-            return "[]";
+            return Response.error("远程推荐数据加载失败");
         }
     }
 
@@ -48,15 +52,16 @@ public class JsonService {
      * 使用Spring Cache缓存结果
      */
     @Cacheable(value = "allTestsData")
-    public String getAllTestsData() {
+    public Response getAllTestsData() {
         log.info(">>> 缓存未命中，从远程获取所有测试数据");
         try {
             String data = restTemplate.getForObject(ALL_TESTS_URL, String.class);
             log.info("<<< 远程测试数据获取成功，将被缓存");
-            return data != null ? data : "[]";
+            Object jsonData = objectMapper.readValue(data != null ? data : "[]", Object.class);
+            return Response.success(jsonData);
         } catch (Exception e) {
             log.error("远程测试数据加载失败: {}", e.getMessage(), e);
-            return "[]";
+            return Response.error("远程测试数据加载失败");
         }
     }
 } 

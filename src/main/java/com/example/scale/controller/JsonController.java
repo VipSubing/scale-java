@@ -1,5 +1,6 @@
 package com.example.scale.controller;
 
+import com.example.scale.entity.Response;
 import com.example.scale.service.JsonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,10 @@ public class JsonController {
     /**
      * 获取推荐JSON数据
      * 
-     * @return 缓存的推荐JSON数据
+     * @return 统一响应格式的推荐JSON数据
      */
     @GetMapping("/pro-test")
-    public String getJsonData() {
+    public Response getJsonData() {
         log.debug("接收到/pro-test JSON数据请求");
         return jsonService.getCachedJsonData();
     }
@@ -32,11 +33,11 @@ public class JsonController {
     /**
      * 获取所有测试JSON数据
      * 
-     * @return 缓存的所有测试JSON数据
+     * @return 统一响应格式的所有测试JSON数据
      */
     @GetMapping("/all-test")
-    public String getAllTests() {
-        log.debug("接收到all-test SON数据请求");
+    public Response getAllTests() {
+        log.debug("接收到all-test JSON数据请求");
         return jsonService.getAllTestsData();
     }
 } 

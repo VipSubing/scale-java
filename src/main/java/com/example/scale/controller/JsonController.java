@@ -19,13 +19,24 @@ public class JsonController {
     private final JsonService jsonService;
     
     /**
-     * 获取JSON数据
+     * 获取推荐JSON数据
      * 
-     * @return 缓存的JSON数据
+     * @return 缓存的推荐JSON数据
      */
     @GetMapping("/pro-test")
     public String getJsonData() {
-        log.debug("接收到JSON数据请求");
+        log.debug("接收到/pro-test JSON数据请求");
         return jsonService.getCachedJsonData();
+    }
+
+    /**
+     * 获取所有测试JSON数据
+     * 
+     * @return 缓存的所有测试JSON数据
+     */
+    @GetMapping("/all-test")
+    public String getAllTests() {
+        log.debug("接收到all-test SON数据请求");
+        return jsonService.getAllTestsData();
     }
 } 

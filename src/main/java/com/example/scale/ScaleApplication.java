@@ -13,6 +13,7 @@ import java.net.UnknownHostException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 应用程序入口
@@ -20,6 +21,7 @@ import java.io.InputStreamReader;
 @Slf4j
 @EnableAsync
 @SpringBootApplication
+@EnableScheduling
 public class ScaleApplication implements CommandLineRunner {
 
     @Autowired

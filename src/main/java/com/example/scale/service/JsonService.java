@@ -1,58 +1,52 @@
 package com.example.scale.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import javax.annotation.PostConstruct;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import lombok.Getter;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * JSON文件处理服务
- * 提供JSON文件的读取和缓存功能
+ * 提供JSON数据的远程获取和缓存功能
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class JsonService {
     
-    /** JSON数据缓存 */
-    @Getter
-    private String cachedJsonData;
+    /** 远程JSON数据URL */
+    private static final String REMOTE_JSON_URL = 
+        "https://purre-green-1309961435.cos.ap-chengdu.myqcloud.com/Scale/recommands-test.json";
     
-    /** JSON文件路径 */
-    @Value("${json.file.path:/app/items.json}")
-    private String jsonFilePath;
-    
-    /**
-     * 服务启动时初始化JSON数据
-     */
-    @PostConstruct
-    public void init() {
-        loadJsonData();
-    }
+    /** RestTemplate用于发送HTTP请求 */
+    private final RestTemplate restTemplate;
     
     /**
-     * 从文件加载JSON数据到内存
+     * 获取JSON数据
+     * 使用Spring Cache缓存结果
      */
-    private void loadJsonData() {
+    @Cacheable(value = "jsonData")
+    public String getCachedJsonData() {
+        log.debug("从远程获取JSON数据");
         try {
-            cachedJsonData = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-            log.info("JSON数据加载成功，文件路径: {}", jsonFilePath);
+            String data = restTemplate.getForObject(REMOTE_JSON_URL, String.class);
+            return data != null ? data : "[]";
         } catch (Exception e) {
-            cachedJsonData = "{}";
-            log.error("JSON文件加载失败: {}", e.getMessage(), e);
+            log.error("远程JSON数据加载失败: {}", e.getMessage(), e);
+            return "[]";
         }
     }
 
     /**
-     * 定时刷新JSON数据
+     * 定时清除缓存
      * 每5分钟执行一次
      */
     @Scheduled(fixedRate = 300000)
-    public void refreshJsonData() {
-        log.debug("开始刷新JSON数据...");
-        loadJsonData();
+    @CacheEvict(value = "jsonData", allEntries = true)
+    public void refreshCache() {
+        log.debug("清除JSON数据缓存");
     }
 } 

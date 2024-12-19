@@ -48,7 +48,7 @@ ssh $SSH_CONFIG_NAME "cd $REMOTE_DIR && \
     tar -xzf $ARCHIVE_NAME && \
     rm $ARCHIVE_NAME && \
     docker-compose down || true && \
-    docker-compose up -d"
+    docker-compose up -d --build"
 
 
 

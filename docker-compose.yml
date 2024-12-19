@@ -6,12 +6,8 @@ services:
     restart: always
     volumes:
       - ./logs:/app/logs
-      - ./items.json:/app/items.json
     networks:
       - scale-network
-    environment:
-      - JSON_FILE_PATH=/app/items.json
-
 
   nginx:
     image: nginx:stable

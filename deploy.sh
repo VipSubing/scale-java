@@ -13,6 +13,9 @@ set -e
 
 echo "开始部署流程..."
 
+echo "jar 打包 环境: prod"
+mvn clean package -DskipTests
+
 # 创建临时部署目录
 echo "创建临时部署目录..."
 mkdir -p deploy_tmp

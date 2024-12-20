@@ -16,10 +16,4 @@ spring:
     livereload:
       enabled: true
   profiles:
-    active: dev
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
-  web:
-    resources:
-      add-mappings: false
+    active: prod

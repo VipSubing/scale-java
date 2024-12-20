@@ -28,7 +28,6 @@ cp Dockerfile deploy_tmp/
 cp docker-compose.yml deploy_tmp/
 cp -r nginx deploy_tmp/
 cp -r ssl deploy_tmp/
-cp items.json deploy_tmp/
 mkdir -p deploy_tmp/logs
 
 # 打包文件

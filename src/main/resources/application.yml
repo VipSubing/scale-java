@@ -17,3 +17,6 @@ spring:
       enabled: true
   profiles:
     active: prod
+  web:
+    resources:
+      add-mappings: false

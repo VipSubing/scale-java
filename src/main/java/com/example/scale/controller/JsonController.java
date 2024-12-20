@@ -1,5 +1,6 @@
 package com.example.scale.controller;
 
+import com.example.scale.entity.QuestionRequest;
 import com.example.scale.entity.Response;
 import com.example.scale.service.JsonService;
 import lombok.RequiredArgsConstructor;
@@ -48,12 +49,26 @@ public class JsonController {
     /**
      * 刷新指定类型的缓存数据
      * 
-     * @param type 缓存类型：all-所有测试数据, pro-推荐数据, script-脚本数据, 空值-所有缓存
+     * @param type 缓存类型：all-所有测试数据, pro-推荐数据, script-脚本数据, questions-问题数据, 空值-所有缓存
      * @return 统一响应格式的刷新结果
      */
     @PostMapping("/refreshData")
     public Response refreshAllData(@RequestBody(required = false) String type) {
         log.info("接收到刷新缓存请求, type: {}", type);
         return jsonService.refreshCache(type);
+    }
+
+    /**
+     * 获取指定ID的问题JSON数据
+     * 
+     * @param request 包含问题ID的请求对象
+     * @return 统一响应格式的问题JSON数据
+     */
+    @PostMapping("/questions")
+    public Response getQuestions(@RequestBody QuestionRequest request) {
+        log.info("开始处理/questions请求, id: {}", request.getId());
+        Response response = jsonService.getQuestionsData(request.getId());
+        log.info("处理/questions请求完成，响应数据: {}", response);
+        return response;
     }
 } 

@@ -2,7 +2,7 @@ server:
   port: 8080
   address: 0.0.0.0
   servlet:
-    context-path: /scale
+    context-path: /scale/api
 
 # Optional: Add these if you want to customize the logging colors
 spring:
@@ -16,4 +16,10 @@ spring:
     livereload:
       enabled: true
   profiles:
-    active: prod
+    active: dev
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  web:
+    resources:
+      add-mappings: false

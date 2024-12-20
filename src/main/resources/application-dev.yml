@@ -1,8 +1,3 @@
-server:
-  port: 8080
-  servlet:
-    context-path: /scale
-
 spring:
   output:
     ansi:
@@ -17,11 +12,11 @@ spring:
 
 logging:
   level:
-    'com.example.scale': DEBUG
-    'org.springframework': INFO
+    "com.example.scale": DEBUG
+    "org.springframework": INFO
   pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
-    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file:
     name: logs/api-dev.log
     max-size: 10MB

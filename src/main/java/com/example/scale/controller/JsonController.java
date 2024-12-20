@@ -5,7 +5,6 @@ import com.example.scale.service.JsonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,8 +26,10 @@ public class JsonController {
      */
     @PostMapping("/pro-test")
     public Response getJsonData() {
-        log.debug("接收到/pro-test JSON数据请求");
-        return jsonService.getCachedJsonData();
+        log.info("开始处理/pro-test JSON数据请求");
+        Response response = jsonService.getCachedJsonData();
+        log.info("处理/pro-test请求完成，响应数据: {}", response);
+        return response;
     }
 
     /**
@@ -38,8 +39,10 @@ public class JsonController {
      */
     @PostMapping("/all-test")
     public Response getAllTests() {
-        log.debug("接收到all-test JSON数据请求");
-        return jsonService.getAllTestsData();
+        log.info("开始处理/all-test JSON数据请求");
+        Response response = jsonService.getAllTestsData();
+        log.info("处理/all-test请求完成，响应数据: {}", response);
+        return response;
     }
 
     /**

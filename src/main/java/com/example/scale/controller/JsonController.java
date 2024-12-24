@@ -71,4 +71,18 @@ public class JsonController {
         log.info("处理/questions请求完成，响应数据: {}", response);
         return response;
     }
+
+    /**
+     * 获取测试信息
+     * 
+     * @param id 测试ID
+     * @return 统一响应格式的测试信息
+     */
+    @GetMapping("/testInfo")
+    public Response getTestInfo(@RequestParam String id) {
+        log.info("开始处理/testInfo请求, id: {}", id);
+        Response response = jsonService.getTestInfo(id);
+        log.info("处理/testInfo请求完成，响应数据: {}", response);
+        return response;
+    }
 } 

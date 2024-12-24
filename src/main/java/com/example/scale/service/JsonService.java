@@ -2,6 +2,8 @@ package com.example.scale.service;
 
 import com.example.scale.entity.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -156,9 +158,57 @@ public class JsonService {
         log.info("清除问题数据缓存");
     }
 
-    @CacheEvict(value = {"recommendData", "allTestsData", "scriptData", "jsonCache"}, allEntries = true)
+    @CacheEvict(value = {"recommendData", "allTestsData", "scriptData", "jsonCache","testInfoCache"}, allEntries = true)
     public void clearAllCache() {
         log.info("清除所有缓存");
+    }
+
+    /**
+     * 获取并缓存指定ID的测试信息
+     * 
+     * @param id 测试ID
+     * @return 统一响应格式的测试信息
+     */
+    @Cacheable(value = "testInfoCache", key = "#id")
+    public Response getTestInfo(String id) {
+        log.info(">>> 缓存未命中，开始获取测试信息, id: {}", id);
+        try {
+            // 获取所有测试数据
+            Response allTestsResponse = getAllTestsData();
+            if (allTestsResponse.getCode() != 200) {
+                return Response.error("getAllTestsData error");
+            }
+            
+            // 从测试列表中查找指定ID的测试
+            JsonNode allTests = objectMapper.valueToTree(allTestsResponse.getData());
+            JsonNode targetTest = null;
+            for (JsonNode test : allTests) {
+                if (test.get("id").asText().equals(id)) {
+                    targetTest = test;
+                    break;
+                }
+            }
+            
+            if (targetTest == null) {
+                return Response.error("未找到ID为" + id + "的测试");
+            }
+
+            // 获取问题数据
+            Response questionsResponse = getQuestionsData(id);
+            if (questionsResponse.getCode() != 200) {
+                return Response.error("getQuestionsData error");
+            }
+
+            // 组装返回数据
+            ObjectNode result = (ObjectNode)targetTest;
+            result.set("items", objectMapper.valueToTree(questionsResponse.getData()));
+            log.info(id, result);
+            log.info("<<< 测试信息获取成功，将被缓存");
+            return Response.success(result);
+        } catch (Exception e) {
+            log.error("获取测试信息失败", e);
+            return Response.error("获取测试信息失败");
+        }
     }
 
     

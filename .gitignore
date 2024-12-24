@@ -20,7 +20,7 @@ deploy_tmp/
 *.zip
 *.tar.gz
 *.rar
-
+ssl/
 # virtual machine crash logs
 hs_err_pid*
 

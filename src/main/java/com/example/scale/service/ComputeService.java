@@ -2,7 +2,6 @@ package com.example.scale.service;
 
 import com.example.scale.entity.ComputeRequest;
 import com.example.scale.entity.Response;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -14,6 +13,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.util.concurrent.CompletableFuture;
 
+import java.io.ByteArrayInputStream;
+import java.util.Base64;
+import java.util.zip.GZIPInputStream;
+
 /**
  * 评分计算服务
  * 提供评分计算和脚本缓存功能
@@ -23,13 +26,12 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class ComputeService {
     private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
     
     /** 远程脚本URL基础地址 */
     private static final String SCRIPT_URL = 
         "https://purre-green-1309961435.cos.ap-chengdu.myqcloud.com/Scale/scriptes";
     
-    /** JavaScript引擎实例 */
+    /** JavaScript引擎例 */
     private final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
 
     /**
@@ -38,12 +40,25 @@ public class ComputeService {
     @Async
     public CompletableFuture<Response> processItems(ComputeRequest request) {
         log.info("收到请求，ID: {}", request.getId());
-        log.debug("请求数据: {}", request.getItems());
     
         try {
             String scriptContent = getScript(request.getId());
-            String itemsJson = objectMapper.writeValueAsString(request.getItems());
+            // 获取 base64 编码的数据
+            String base64Data = request.getBuffer();
             
+            
+            // 解码 base64 数据
+            byte[] buffer = Base64.getDecoder().decode(base64Data);
+            // buffer 转字符串
+            
+            log.debug("buffer: {}", buffer);
+            // * 解压
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(buffer);
+            GZIPInputStream gzipInputStream = new GZIPInputStream(byteArrayInputStream);
+            String itemsJson = new String(gzipInputStream.readAllBytes());
+            gzipInputStream.close();
+            byteArrayInputStream.close();
+            // log.debug("itemsJson: {}", itemsJson);
             synchronized (scriptEngine) {
                 scriptEngine.eval(scriptContent);
                 Invocable invocable = (Invocable) scriptEngine;

@@ -16,7 +16,7 @@ spring:
     livereload:
       enabled: true
   profiles:
-    active: prod
+    active: dev
   web:
     resources:
       add-mappings: false

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
+import java.util.Base64;
 
 /**
  * JSON文件处理服务
@@ -28,7 +29,7 @@ public class JsonService {
     private static final String ALL_TESTS_URL = 
         "https://purre-green-1309961435.cos.ap-chengdu.myqcloud.com/Scale/all-tests.json";
 
-        private static final String QUESTIONS_URL = "https://purre-green-1309961435.cos.ap-chengdu.myqcloud.com/Scale/questions/";
+    private static final String QUESTIONS_URL = "https://purre-green-1309961435.cos.ap-chengdu.myqcloud.com/Scale/questions/";
     
     /** RestTemplate用于发送HTTP请求 */
     private final RestTemplate restTemplate;
@@ -42,11 +43,18 @@ public class JsonService {
      */
     @Cacheable(value = "jsonCache", key = "#id")
     public Response getQuestionsData(String id) {
-        String url = QUESTIONS_URL + id + ".json";
+        String url = QUESTIONS_URL + id + ".json.gzip";
         try {
-            String data = restTemplate.getForObject(url, String.class);
-            Object jsonData = objectMapper.readValue(data != null ? data : "[]", Object.class); 
-            return Response.success(jsonData);
+            byte[] zipData = restTemplate.getForObject(url, byte[].class);
+            
+            if (zipData == null) {
+                return Response.error("获取问题数据失败: 远程数据为空");
+            }
+            // * 转base64字符串
+            String base64Data = Base64.getEncoder().encodeToString(zipData);
+            log.debug("zipData: {}", zipData);
+            log.debug("base64Data: {}", base64Data);
+            return Response.success(base64Data);
         } catch (Exception e) {
             log.error("获取问题数据失败 url: {}", url, e);
             return Response.error("获取问题数据失败");
@@ -111,7 +119,7 @@ public class JsonService {
                     clearAllTestCache();
                     getAllTestsData();
                     log.info("<<< 所有测试数据缓存刷新成功");
-                    return Response.success("所有测试数据缓存刷新成功");
+                    return Response.success("所有测试数��缓存刷新成功");
                 
                 case "pro":
                     clearRecommendCache();

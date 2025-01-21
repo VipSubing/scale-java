@@ -12,10 +12,19 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.util.concurrent.CompletableFuture;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.ByteArrayInputStream;
 import java.util.Base64;
 import java.util.zip.GZIPInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * 评分计算服务
@@ -26,6 +35,7 @@ import java.util.zip.GZIPInputStream;
 @RequiredArgsConstructor
 public class ComputeService {
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
     
     /** 远程脚本URL基础地址 */
     private static final String SCRIPT_URL = 
@@ -46,12 +56,9 @@ public class ComputeService {
             // 获取 base64 编码的数据
             String base64Data = request.getBuffer();
             
-            
             // 解码 base64 数据
             byte[] buffer = Base64.getDecoder().decode(base64Data);
-            // buffer 转字符串
             
-            log.debug("buffer: {}", buffer);
             // * 解压
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(buffer);
             GZIPInputStream gzipInputStream = new GZIPInputStream(byteArrayInputStream);
@@ -59,27 +66,79 @@ public class ComputeService {
             gzipInputStream.close();
             byteArrayInputStream.close();
             // log.debug("itemsJson: {}", itemsJson);
+
+            Object result = null;
             synchronized (scriptEngine) {
                 scriptEngine.eval(scriptContent);
                 Invocable invocable = (Invocable) scriptEngine;
-                Object result = invocable.invokeFunction("scoreCalculator", itemsJson);
+                result = invocable.invokeFunction("scoreCalculator", itemsJson);
                 log.info("计算结果: {}", result);
+            }
+            if (result == null) {
+                return CompletableFuture.completedFuture(Response.error("计算结果为空"));
+            }
+            if (!isReturnHtml(request.getId())) {
                 return CompletableFuture.completedFuture(Response.success(result));
             }
+            // 返回html
+            String resultString = result.toString();
+            // 将 resultString 转换为 JSON 对象
+            ObjectNode resultJson = objectMapper.readValue(resultString, ObjectNode.class);
+            ObjectNode jsonObject = objectMapper.createObjectNode();
+            jsonObject.set("data", resultJson);
+            
+            jsonObject.put("template", "result");
+
+            var jsonString = jsonObject.toString();
+            log.info("jsonString: {}", jsonString);
+            // 设置请求头
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> requestEntity = new HttpEntity<>(jsonString, headers);
+            
+            // 发送请求
+            ResponseEntity<ObjectNode> response = restTemplate.postForEntity(
+                "http://localhost:3000/api/render", 
+                requestEntity,
+                ObjectNode.class
+            );
+            
+            // 将 response 转换为 string
+            ObjectNode resNode = response.getBody();
+            if (resNode == null) {
+                throw new RuntimeException("Response body is null");
+            }
+            var html = resNode.get("html");
+            if (html == null) {
+                throw new RuntimeException("HTML content is null");
+            }
+            // log.info("Generated HTML: {}", html);
+            
+            return CompletableFuture.completedFuture(Response.success(html));
         } catch (Exception e) {
             log.error("处理脚本出错，ID: {}, 错误: {}", request.getId(), e.getMessage());
             return CompletableFuture.completedFuture(Response.error("脚本处理失败: " + e.getMessage()));
         }
     }
-
+    private boolean isReturnHtml(String id) {
+        String[] ids = {"000000002"};
+        return Arrays.asList(ids).contains(id);
+    }
     /**
      * 获取脚本内容
      * 使用Spring Cache缓存结果
      */
     @Cacheable(value = "scriptData", key = "#scriptId")
     private String getScript(String scriptId) {
+        
         log.info(">>> 缓存未命中，从远程获取脚本: {}", scriptId);
         try {
+            //scriptId 为 000000002，加载本地脚本
+            if (scriptId.equals("000000002")) {
+                String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000002.js")));
+                log.info("<<< 本地脚本获取成功，将被缓存");
+                return script;
+            }
             String script = restTemplate.getForObject(
                 SCRIPT_URL + "/" + scriptId + ".js", 
                 String.class
@@ -88,7 +147,7 @@ public class ComputeService {
             return script != null ? script : "";
         } catch (Exception e) {
             log.error("远程脚本获取失败: {}", e.getMessage(), e);
-            return "";
+            throw new RuntimeException("获取脚本失败: " + e.getMessage());
         }
     }
 } 

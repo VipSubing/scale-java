@@ -2,6 +2,7 @@ function scoreCalculator(data) {
   var questions = JSON.parse(data);
 
   var totalScore = 0;
+  var totalPositiveScore = 0;
   var positiveItemCount = 0;
   var factorScores = {
     somatization: 0,
@@ -33,8 +34,9 @@ function scoreCalculator(data) {
     question.answers.forEach(function (answer) {
       if (answer.selected) {
         totalScore += answer.score;
-        if (answer.score > 0) {
+        if (answer.score >= 2) {
           positiveItemCount++;
+          totalPositiveScore += answer.score;
         }
 
         // Assign scores to factors
@@ -47,13 +49,10 @@ function scoreCalculator(data) {
     });
   });
 
-  var totalSymptomIndex = totalScore / data.length;
-  var positiveSymptomDistressIndex = totalScore / positiveItemCount;
-
-  // Calculate factor scores
-  for (var factor in factorScores) {
-    factorScores[factor] /= factorItems[factor].length;
-  }
+  var totalSymptomIndex = Number((totalScore / questions.length).toFixed(2));
+  var positiveSymptomDistressIndex = Number(
+    (totalPositiveScore / positiveItemCount).toFixed(2)
+  );
 
   return JSON.stringify({
     totalScore: totalScore,

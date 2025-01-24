@@ -44,6 +44,7 @@ public class JsonService {
     @Cacheable(value = "jsonCache", key = "#id")
     public Response getQuestionsData(String id) {
         String url = QUESTIONS_URL + id + ".json.gzip";
+        log.info("获取问题数据 url: {}", url);
         try {
             byte[] zipData = restTemplate.getForObject(url, byte[].class);
             
@@ -52,8 +53,8 @@ public class JsonService {
             }
             // * 转base64字符串
             String base64Data = Base64.getEncoder().encodeToString(zipData);
-            log.debug("zipData: {}", zipData);
-            log.debug("base64Data: {}", base64Data);
+            // log.debug("zipData: {}", zipData);
+            // log.debug("base64Data: {}", base64Data);
             return Response.success(base64Data);
         } catch (Exception e) {
             log.error("获取问题数据失败 url: {}", url, e);

@@ -114,11 +114,11 @@ public class ComputeService {
             //     return script;
             // }
             //scriptId 为 000000002，加载本地脚本
-            if (scriptId.equals("000000002")) {
-                String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000002.js")));
-                log.info("<<< 本地脚本获取成功，将被缓存");
-                return script;
-            }
+            // if (scriptId.equals("000000002")) {
+            //     String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000002.js")));
+            //     log.info("<<< 本地脚本获取成功，将被缓存");
+            //     return script;
+            // }
             // //scriptId 为 000000001，加载本地脚本
             // if (scriptId.equals("000000001")) {
             //     String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000001.js")));

@@ -54,7 +54,8 @@ ssh $SSH_CONFIG_NAME "cd $REMOTE_DIR && \
 
 # 检查服务是否启动成功
 echo "检查服务是否启动成功..."
-ssh  $SSH_CONFIG_NAME "cd $REMOTE_DIR && docker-compose ps"
+ssh $SSH_CONFIG_NAME "cd $REMOTE_DIR && docker-compose ps && timeout 10s docker-compose logs -f || true"
+
 
 # 清理本地临时文件
 echo "清理本地临时文件..."

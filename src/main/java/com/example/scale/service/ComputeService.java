@@ -96,35 +96,35 @@ public class ComputeService {
         log.info(">>> 缓存未命中，从远程获取脚本: {}", scriptId);
         try {
             //scriptId 为 000000005，加载本地脚本
-            if (scriptId.equals("000000005")) {
-                String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000005.js")));
-                log.info("<<< 本地脚本获取成功，将被缓存");
-                return script;
-            }
-            //scriptId 为 000000004，加载本地脚本
-            if (scriptId.equals("000000004")) {
-                String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000004.js")));
-                log.info("<<< 本地脚本获取成功，将被缓存");
-                return script;
-            }
-            //scriptId 为 000000003，加载本地脚本
-            if (scriptId.equals("000000003")) {
-                String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000003.js")));
-                log.info("<<< 本地脚本获取成功，将被缓存");
-                return script;
-            }
+            // if (scriptId.equals("000000005")) {
+            //     String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000005.js")));
+            //     log.info("<<< 本地脚本获取成功，将被缓存");
+            //     return script;
+            // }
+            // //scriptId 为 000000004，加载本地脚本
+            // if (scriptId.equals("000000004")) {
+            //     String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000004.js")));
+            //     log.info("<<< 本地脚本获取成功，将被缓存");
+            //     return script;
+            // }
+            // //scriptId 为 000000003，加载本地脚本
+            // if (scriptId.equals("000000003")) {
+            //     String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000003.js")));
+            //     log.info("<<< 本地脚本获取成功，将被缓存");
+            //     return script;
+            // }
             //scriptId 为 000000002，加载本地脚本
             if (scriptId.equals("000000002")) {
                 String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000002.js")));
                 log.info("<<< 本地脚本获取成功，将被缓存");
                 return script;
             }
-            //scriptId 为 000000001，加载本地脚本
-            if (scriptId.equals("000000001")) {
-                String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000001.js")));
-                log.info("<<< 本地脚本获取成功，将被缓存");
-                return script;
-            }
+            // //scriptId 为 000000001，加载本地脚本
+            // if (scriptId.equals("000000001")) {
+            //     String script = new String(Files.readAllBytes(Paths.get("src/main/resources/000000001.js")));
+            //     log.info("<<< 本地脚本获取成功，将被缓存");
+            //     return script;
+            // }
             String script = restTemplate.getForObject(
                 SCRIPT_URL + "/" + scriptId + ".js", 
                 String.class
